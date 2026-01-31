@@ -2,19 +2,17 @@ import React, { useRef, useEffect, useState } from "react";
 import * as faceapi from "face-api.js";
 
 const FaceExpressionDetector = () => {
-  const videoRef = useRef();
-  const [expression, setExpression] = useState("Loading...");
+  const videoRef = useRef(null);
+  const [expression, setExpression] = useState("Not detected");
 
   useEffect(() => {
     startVideo();
     loadModels();
   }, []);
 
-  const startVideo = () => {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        videoRef.current.srcObject = stream;
-      });
+  const startVideo = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    videoRef.current.srcObject = stream;
   };
 
   const loadModels = async () => {
@@ -23,33 +21,41 @@ const FaceExpressionDetector = () => {
       faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
       faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
     ]);
-    detectExpression();
+    console.log("Models loaded");
   };
 
-  const detectExpression = () => {
-    setInterval(async () => {
-      if (videoRef.current) {
-        const detections = await faceapi
-          .detectSingleFace(
-            videoRef.current,
-            new faceapi.TinyFaceDetectorOptions()
-          )
-          .withFaceExpressions();
+  // 👇 Detect expression when button is clicked
+  const detectExpression = async () => {
+    if (!videoRef.current) return;
 
-        if (detections) {
-          const expressions = detections.expressions;
-          const maxExpression = Object.keys(expressions).reduce(
-            (a, b) => expressions[a] > expressions[b] ? a : b
-          );
-          setExpression(maxExpression);
-        }
-      }
-    }, 1000);
+    const detection = await faceapi
+      .detectSingleFace(
+        videoRef.current,
+        new faceapi.TinyFaceDetectorOptions()
+      )
+      .withFaceExpressions();
+
+    if (detection) {
+      const expressions = detection.expressions;
+      const maxExpression = Object.keys(expressions).reduce(
+        (a, b) => (expressions[a] > expressions[b] ? a : b)
+      );
+
+      setExpression(maxExpression);
+      console.log("Detected Expression:", maxExpression);
+      console.log("All Probabilities:", expressions);
+    } else {
+      console.log("No face detected");
+    }
   };
 
   return (
     <div>
       <video ref={videoRef} autoPlay muted width="400" />
+      <br />
+      <button onClick={detectExpression}>
+        Detect Expression
+      </button>
       <h2>Expression: {expression}</h2>
     </div>
   );
