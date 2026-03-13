@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  color: white;
+  overflow: hidden; /* App takes full screen */
+}
+
+/* Base styles for the premium UI */
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 1.5s ease-in-out;
+  background: linear-gradient(135deg, #1e1e24, #151515); /* default dark */
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+  width: 90%;
+  max-width: 480px;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  margin-bottom: 30px;
+  background: #000;
+  border: 2px solid rgba(255,255,255,0.05);
+}
+
+.video-container video {
+  width: 100%;
+  display: block;
+}
+
+.scan-btn {
+  background: linear-gradient(90deg, #bb86fc, #6200ea);
+  color: white;
+  border: none;
+  padding: 18px 36px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(98, 0, 234, 0.4);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-family: 'Outfit', sans-serif;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.scan-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(98, 0, 234, 0.6);
+  background: linear-gradient(90deg, #c79bfd, #7011f0);
+}
+
+.scan-btn:active {
+  transform: translateY(1px);
+}
+
+.scan-btn:disabled {
+  background: #333;
+  color: #777;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.expression-title {
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.expression-value {
+  font-weight: 600;
+  font-size: 2.5rem;
+  text-transform: capitalize;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.music-info {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.7);
+  width: 100%;
+}
+
+.music-name {
+  font-weight: 600;
+  color: #fff;
+  font-size: 1.1rem;
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+
+.audio-player {
+  width: 100%;
+  outline: none;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.audio-player:hover {
+  opacity: 1;
+}
+
+.audio-player::-webkit-media-controls-panel {
+  background-color: rgba(255, 255, 255, 0.9);
+}
